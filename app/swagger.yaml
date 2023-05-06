@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  description: "Harry Potter API specification"
+  version: "1.0.0"
+  title: "PotterApp"
+host: "hp-api.onrender.com"
+basePath: "/api"
+tags:
+- name: "Characters"
+  description: "Characters of Harry Potter"
+schemes:
+- "http"
+- "https"
+# ------------------------------------------------
+paths:
+  /characters:
+    get:
+      tags:
+        - Characters
+
+      summary: "Characters of Harry Potter"
+      operationId: "getActors"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/character"
+        400:
+          description: "Bad request"
+        500:
+          description: "Cannot get characters"
+# ------------------------------------------------
+definitions:
+  character:
+    type: object
+
+    properties:
+     id:
+      type: string
+      example: "9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8"
+
+     name:
+      type: string
+      example: "Harry Potter"
+      
+     species:
+      type: string
+      example: "human"
+      
+     house:
+      type: string
+      example: "Gryffindor"
+    
+     dateOfBirth:
+      type: string
+      example: "31-07-1980"
+    
+     ancestry:
+      type: string
+      example: "half-blood"
+    
+     patronus:
+      type: string
+      example: "stag"
+    
+     actor:
+      type: string
+      example: "Daniel Radcliffe"
+
+     image:
+      type: string
+      example: "https://ik.imagekit.io/hpapi/harry.jpg"

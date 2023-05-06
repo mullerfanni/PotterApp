@@ -1,10 +1,9 @@
 package com.example.potterapp.network
 
 import com.example.potterapp.model.Actor
+import retrofit2.http.GET
 
-class PotterService {
-fun getActors(): List<Actor>? {
-//Todo
-return null;
-}
+interface PotterService {
+    @GET("characters")
+    suspend fun getActors(): List<Actor>
 }
