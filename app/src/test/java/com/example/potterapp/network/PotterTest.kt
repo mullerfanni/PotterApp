@@ -20,52 +20,52 @@ import retrofit2.converter.gson.GsonConverterFactory
 @RunWith(MockitoJUnitRunner::class)
 class PotterTest {
 
-@Rule
-@JvmField
-val instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+    @Rule
+    @JvmField
+    val instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-@ExperimentalCoroutinesApi
-@get:Rule
-val coroutinesRule = CoroutineTestRule()
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val coroutinesRule = CoroutineTestRule()
 
-private lateinit var service: PotterService
-private lateinit var server: MockWebServer
+    private lateinit var service: PotterService
+    private lateinit var server: MockWebServer
 
-@Before
-fun setUp() {
-server = MockWebServer()
-service = Retrofit.Builder()
-.baseUrl(server.url(""))//We will use MockWebServers url
-.addConverterFactory(GsonConverterFactory.create())
-.build()
-.create(PotterService::class.java)
-}
+    @Before
+    fun setUp() {
+        server = MockWebServer()
+        service = Retrofit.Builder()
+            .baseUrl(server.url(""))//We will use MockWebServers url
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PotterService::class.java)
+    }
 
-private fun enqueueMockResponse(fileName: String) {
-javaClass.classLoader?.let {
-val inputStream = it.getResourceAsStream(fileName)
-val source = inputStream.source().buffer()
-val mockResponse = MockResponse()
-mockResponse.setBody(source.readString(Charsets.UTF_8))
-server.enqueue(mockResponse)
-}
-}
+    private fun enqueueMockResponse(fileName: String) {
+        javaClass.classLoader?.let {
+            val inputStream = it.getResourceAsStream(fileName)
+            val source = inputStream.source().buffer()
+            val mockResponse = MockResponse()
+            mockResponse.setBody(source.readString(Charsets.UTF_8))
+            server.enqueue(mockResponse)
+        }
+    }
 
-@After
-fun tearDown() {
-server.shutdown()
-}
+    @After
+    fun tearDown() {
+        server.shutdown()
+    }
 
-@Test
-fun getCharacter_test() {
-runBlocking {
+    @Test
+    fun getCharacter_test() {
+        runBlocking {
 // Prepare fake response
-enqueueMockResponse("actors.json")
+            enqueueMockResponse("actors.json")
 //Send Request to the MockServer
-val responseBody = service.getActors()
+            val responseBody = service.getActors()
 //Request received by the mock server
-val request = server.takeRequest()
-assert(responseBody.isNotEmpty())
-}
-}
+            val request = server.takeRequest()
+            assert(responseBody.isNotEmpty())
+        }
+    }
 }

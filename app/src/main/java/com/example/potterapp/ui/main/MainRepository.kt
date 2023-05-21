@@ -3,17 +3,11 @@ package com.example.potterapp.ui.main
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.potterapp.model.Actor
-import com.example.potterapp.model.UIModel
 import com.example.potterapp.network.PotterService
 import com.example.potterapp.persistence.ActorDao
-import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val service: PotterService,
@@ -22,20 +16,25 @@ class MainRepository @Inject constructor(
     fun getActors(): Flow<List<Actor>> = dao.getAll()
 
     @WorkerThread
-    suspend fun reloadActors(state: MutableStateFlow<UIModel>) {
-        state.emit(UIModel.Loading)
+    suspend fun reloadActors(errorMessage: MutableStateFlow<String?>, isRefreshing: MutableStateFlow<Boolean>) {
+        isRefreshing.emit(true)
         try {
             // request API network call asynchronously.
             val characters = service.getActors()
             // handle the case when the API request gets a success response.
             dao.insertAll(characters)
-            state.emit(UIModel.Loaded)
+            errorMessage.emit(null)
+            isRefreshing.emit(false)
         } catch(error: Exception) {
             Log.e("something went wrong", error.message.orEmpty())
 
             // handle the case when the API request is fails.
             // e.g. internal server error
-            state.emit(UIModel.Error(error.message ?: "error"))
+            val message = if (error.message?.startsWith("Unable to resolve") == true)
+                "Please check your internet connection, and try again!"
+            else error.message
+            errorMessage.emit(message ?: "Unknown error, try again!")
+            isRefreshing.emit(false)
         }
     }
 
