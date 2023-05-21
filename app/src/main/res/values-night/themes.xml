@@ -3,5 +3,14 @@
     <style name="Base.Theme.PotterApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+    <style name="Theme.PotterApp" parent="Base.Theme.PotterApp" />
+
+    <style name="Theme.App.SplashTheme" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@drawable/hogwarts_dark</item>
+        <item name="postSplashScreenTheme">@style/Theme.PotterApp</item>
     </style>
 </resources>

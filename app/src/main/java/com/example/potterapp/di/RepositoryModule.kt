@@ -2,6 +2,7 @@ package com.example.potterapp.di
 
 import com.example.potterapp.network.PotterService
 import com.example.potterapp.persistence.ActorDao
+import com.example.potterapp.ui.details.DetailsRepository
 import com.example.potterapp.ui.main.MainRepository
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,12 @@ object RepositoryModule {
         potterDao: ActorDao
     ): MainRepository {
         return MainRepository(potterService, potterDao)
+    }
+
+    @Provides
+    fun provideDetailRepository(
+        potterDao: ActorDao
+    ): DetailsRepository {
+        return DetailsRepository(potterDao)
     }
 }
