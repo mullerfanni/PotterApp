@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361707803103",
+    "project_id": "potterapp-c8743",
+    "storage_bucket": "potterapp-c8743.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361707803103:android:0ccf5258f9378a8efeb46a",
+        "android_client_info": {
+          "package_name": "com.example.potterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361707803103-gksu2o86njrcdrftir3e6kjffc1hmg79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSH3PPO8c2x16l8-cbz1Zi3mSxnbZ9fGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361707803103-gksu2o86njrcdrftir3e6kjffc1hmg79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
