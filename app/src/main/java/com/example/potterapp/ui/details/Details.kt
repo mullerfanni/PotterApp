@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.AbsoluteCutCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
@@ -137,6 +138,11 @@ fun Details(id: String?, viewModel: DetailsViewModel = hiltViewModel()) {
                         Text(text = "Date of birth: ${character?.dateOfBirth?.takeIf { it.isNotEmpty() } ?: "N/A"}")
                         Text(text = "Patronus: ${character?.patronus?.takeIf { it.isNotEmpty() } ?: "N/A"}")
                         Text(text = "Actor: ${character?.actor?.takeIf { it.isNotEmpty() } ?: "N/A"}")
+                        Button(onClick = {
+                            throw RuntimeException("Test crash") // Force a crash
+                        }) {
+                            Text("CRASH TEST")
+                        }
                     }
                 }
             }
